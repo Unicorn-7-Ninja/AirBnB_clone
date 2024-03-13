@@ -5,8 +5,7 @@ import re
 from shlex import split
 from models import storage
 from models.base_model import BaseModel
-#from models.user/state/city/place/amenity/review import same as models
-
+#from models.user/state/city/place/amenity/review import samed as models
 
 def parse_arguments(argument):
     curly_brace_match = re.search(r"\{(.*?)\}", argument)
@@ -52,12 +51,16 @@ class HBNBCommand(cmd.Cmd):
         }
         dot_match = re.search(r"\.", argument)
         if dot_match is not None:
-            argument_list = [argument[:dot_match.span()[0]], argument[dot_match.span()[1]:]]
-            command_match = re.search(r"\((.*?)\)", argument_list[1])
+            argument_list = [argument[:dot_match.span()[0]],
+                             argument[dot_match.span()[1]:]]
+            command_match = re.search(r"\((.*?)\)",
+                                      argument_list[1])
             if command_match is not None:
-                command = [argument_list[1][:command_match.span()[0]], command_match.group()[1:-1]]
+                command = [argument_list[1][:command_match.span()[0]], 
+                           command_match.group()[1:-1]]
                 if command[0] in command_map.keys():
-                    command_string = "{} {}".format(argument_list[0], command[1])
+                    command_string = "{} {}".format(argument_list[0], 
+                                                    command[1])
                     return command_map[command[0]](command_string)
         print("*** Unknown syntax: {}".format(argument))
         return False
@@ -88,10 +91,12 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
         elif len(argument_list) == 1:
             print("** instance id missing **")
-        elif "{}.{}".format(argument_list[0], argument_list[1]) not in object_dict:
+        elif "{}.{}".format(argument_list[0], 
+                            argument_list[1]) not in object_dict:
             print("** no instance found **")
         else:
-            print(object_dict["{}.{}".format(argument_list[0], argument_list[1])])
+            print(object_dict["{}.{}".format(argument_list[0], 
+                                             argument_list[1])])
 
     def do_destroy(self, argument):
         argument_list = parse_arguments(argument)
@@ -102,20 +107,27 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
         elif len(argument_list) == 1:
             print("** instance id missing **")
-        elif "{}.{}".format(argument_list[0], argument_list[1]) not in object_dict.keys():
+        elif "{}.{}".format(argument_list[0], 
+                            argument_list[1]) 
+        not in object_dict.keys():
             print("** no instance found **")
         else:
             del object_dict["{}.{}".format(argument_list[0], argument_list[1])]
             storage.save()
 
     def do_all(self, argument):
+        
         argument_list = parse_arguments(argument)
-        if len(argument_list) > 0 and argument_list[0] not in HBNBCommand.supported_classes:
+        if len(argument_list) > 0 
+        and argument_list[0]
+        not in HBNBCommand.supported_classes:
             print("** class doesn't exist **")
         else:
             object_list = []
             for obj in storage.all().values():
-                if len(argument_list) > 0 and argument_list[0] == obj.__class__.__name__:
+                if len(argument_list) > 0 
+                and 
+                argument_list[0] == obj.__class__.__name__:
                     object_list.append(obj.__str__())
                 elif len(argument_list) == 0:
                     object_list.append(obj.__str__())
@@ -142,7 +154,8 @@ class HBNBCommand(cmd.Cmd):
         if len(argument_list) == 1:
             print("** instance id missing **")
             return False
-        if "{}.{}".format(argument_list[0], argument_list[1]) not in object_dict.keys():
+        if "{}.{}".format(argument_list[0], 
+                          argument_list[1]) not in object_dict.keys():
             print("** no instance found **")
             return False
         if len(argument_list) == 2:
@@ -156,17 +169,20 @@ class HBNBCommand(cmd.Cmd):
                 return False
 
         if len(argument_list) == 4:
-            obj = object_dict["{}.{}".format(argument_list[0], argument_list[1])]
+            obj = object_dict["{}.{}".format(argument_list[0],
+                                             argument_list[1])]
             if argument_list[2] in obj.__class__.__dict__.keys():
                 valtype = type(obj.__class__.__dict__[argument_list[2]])
                 obj.__dict__[argument_list[2]] = valtype(argument_list[3])
             else:
                 obj.__dict__[argument_list[2]] = argument_list[3]
         elif type(eval(argument_list[2])) == dict:
-            obj = object_dict["{}.{}".format(argument_list[0], argument_list[1])]
+            obj = object_dict["{}.{}".format(argument_list[0],
+                                             argument_list[1])]
             for key, value in eval(argument_list[2]).items():
                 if (key in obj.__class__.__dict__.keys() and
-                        type(obj.__class__.__dict__[key]) in {str, int, float}):
+                        type(obj.__class__.__dict__[key]) 
+                    in {str, int, float}):
                     valtype = type(obj.__class__.__dict__[key])
                     obj.__dict__[key] = valtype(value)
                 else:
@@ -176,4 +192,3 @@ class HBNBCommand(cmd.Cmd):
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
-  
