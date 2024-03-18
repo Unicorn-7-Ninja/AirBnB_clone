@@ -5,7 +5,7 @@ import re
 from shlex import split
 from models import storage
 from models.base_model import BaseModel
-#from models.user/state/city/place/amenity/review import samed as models
+"""from models.user/state/city/place/amenity/review import samed as models"""
 
 
 def parse_arguments(argument):
@@ -126,8 +126,7 @@ class HBNBCommand(cmd.Cmd):
             object_list = []
             for obj in storage.all().values():
                 if len(argument_list) > 0
-                and
-                argument_list[0] == obj.__class__.__name__:
+                and argument_list[0] == obj.__class__.__name__:
                     object_list.append(obj.__str__())
                 elif len(argument_list) == 0:
                     object_list.append(obj.__str__())
