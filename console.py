@@ -181,8 +181,7 @@ class HBNBCommand(cmd.Cmd):
             for key, value in eval(argument_list[2]).items():
                 if (key in obj.__class__.__dict__.keys() and
                         type(obj.__class__.__dict__[key])
-                if condition:
-                    if isinstance(my_var, {str, int, float}):
+                if isinstance(my_var, {str, int, float}):
                     valtype = type(obj.__class__.__dict__[key])
                     obj.__dict__[key] = valtype(value)
                 else:
