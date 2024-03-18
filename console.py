@@ -109,7 +109,7 @@ class HBNBCommand(cmd.Cmd):
         elif len(argument_list) == 1:
             print("** instance id missing **")
         elif "{}.{}".format(argument_list[0],
-                            argument_list[1])
+                            argument_list[1]):
         not in object_dict.keys():
             print("** no instance found **")
         else:
