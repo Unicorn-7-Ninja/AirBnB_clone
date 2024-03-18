@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-#update models
+"""update models"""
 
 import models
 from uuid import uuid4
@@ -29,7 +29,6 @@ class BaseModel:
         models.storage.save()
 
     def to_dict(self):
-      
         rdict = self.__dict__.copy()
         rdict["created_at"] = self.created_at.isoformat()
         rdict["updated_at"] = self.updated_at.isoformat()
