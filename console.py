@@ -180,12 +180,12 @@ class HBNBCommand(cmd.Cmd):
                                              argument_list[1])]
             for key, value in eval(argument_list[2]).items():
                 if (key in obj.__class__.__dict__.keys() and
-                                type(obj.__class__.__dict__[key])
-        if isinstance(my_var, {str, int, float}):
-            valtype = type(obj.__class__.__dict__[key])
-            obj.__dict__[key] = valtype(value)
-        else:
-            obj.__dict__[key] = value
+                   type(obj.__class__.__dict__[key])
+                   in {str, int, float}):
+                    valtype = type(obj.__class__.__dict__[key])
+                    obj.__dict__[key] = valtype(value)
+                else:
+                    obj.__dict__[key] = value
         storage.save()
 
 if __name__ == "__main__":
